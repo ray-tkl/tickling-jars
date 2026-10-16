@@ -26,7 +26,7 @@ const SETTINGS = Object.assign({ title: "({role}) #くすぐり性癖の瓶", co
 const INK = "#1f1d1b";
 const FONT_UI = '"Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif';
 const FONT_HAND = '"Zen Kaku Gothic New", "Yu Gothic", sans-serif';
-const STORE_KEY = "interest-jars-v1";
+const STORE_KEY = "tickling-jars";
 
 /* ===== 状態（ブラウザ内にだけ保存） ===== */
 let state = { name: "", color: { h: 214, tone: DEFAULT_TONE }, role: DEFAULT_ROLE, answers: {} };
@@ -211,7 +211,7 @@ function drawPoster(canvas, scale) {
     const CELL_W = 160, CELL_H = 300, GRID_TOP = 230;
     const PW = Math.max(1040, cols * CELL_W + 120);
     const rows = Math.ceil(JARS.length / cols);
-    const PH = GRID_TOP + rows * CELL_H + 40;
+    const PH = GRID_TOP + rows * CELL_H + 80;
 
     canvas.width = PW * scale; canvas.height = PH * scale;
     const c = canvas.getContext("2d");
@@ -247,6 +247,12 @@ function drawPoster(canvas, scale) {
         c.font = `500 ${size}px ${FONT_UI}`; c.fillStyle = INK; c.textAlign = "center";
         lines.forEach((l, k) => c.fillText(l, cx, top + 22 + 180 + 44 + k * (size + 6)));
     });
+
+    // 下部のクレジット
+    c.font = `400 26px ${FONT_UI}`;
+    c.fillStyle = "#8a8580";
+    c.textAlign = "center";
+    c.fillText("製作：れー(@ray_tkl)", PW / 2, PH - 30);
 }
 
 /* ===== UI ===== */
@@ -352,7 +358,7 @@ async function generate() {
         const safe = name.replace(/[\\/:*?"<>|\s]+/g, "_");
         $("resultImg").src = resultUrl;
         $("download").href = resultUrl;
-        $("download").download = (safe ? safe + "_" : "") + "interest_jars.png";
+        $("download").download = (safe ? safe + "_" : "") + "tickling_jars.png";
         $("result").hidden = false;
         $("result").scrollIntoView({ behavior: "smooth", block: "start" });
     } finally {
