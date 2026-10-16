@@ -20,7 +20,7 @@ const DEFAULT_TONE = 1;
 
 /* ===== どのときの自分として ===== */
 const ROLES = ["ぐり", "ぐら", "両刀"];
-const DEFAULT_ROLE = 1;
+const DEFAULT_ROLE = 0;
 
 const SETTINGS = Object.assign({ title: "({role}) #くすぐり性癖の瓶", columns: 8 }, typeof JAR_SETTINGS === "object" ? JAR_SETTINGS : {});
 const INK = "#1f1d1b";
