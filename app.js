@@ -89,21 +89,39 @@ function drawLid(c, rgb, dx, dy, rot) {
     c.stroke(); c.restore();
 }
 
-/* 「大好き」の溢れ方。瓶ごとにしずくの位置・長さが変わる */
-function makeSpill(r) {
-    const base = 42 + r() * 6, n = 3 + (r() < 0.5 ? 1 : 0), span = 84 / n, drips = [];
+/* strength: 溢れ量（0〜1）。乱数は位置・太さ・長さのわずかな揺らぎにだけ使う */
+function makeSpill(r, strength = 0.8) {
+    const j = 2;
+    const base = 45;                          // 口の位置は固定
+    const n = 4;                              // しずくの本数は固定
+    const profile = [0.55, 0.9, 0.4, 0.75];   // 各しずくの長さの比率（固定）
+    const maxL = 8 + strength * 52;           // 溢れ量から全体の長さが決まる
+    const span = 84 / n;
+    const drips = [];
+
     for (let i = 0; i < n; i++) {
-        const w = 9 + r() * 5;
-        drips.push({ cx: 8 + span * (i + 0.5) + (r() - 0.5) * span * 0.4, w, L: 8 + r() * 52 });
+        // 乱数は必ず引く（j が 0 でも引く順番が変わらないように）
+        const w = 11 + (r() - 0.5) * 1.5 * j;
+        drips.push({
+            cx: 8 + span * (i + 0.5) + (r() - 0.5) * span * 0.2 * j,
+            w,
+            L: maxL * profile[i] * (1 + (r() - 0.5) * 0.06 * j),
+        });
     }
+
     const spill = { base, drips, puddle: null };
-    if (r() < 0.55) {
-        drips[Math.floor(r() * n)].L = 999; // 1本だけ床まで垂れて水たまりになる
-        spill.puddle = { cx: 50 + (r() - 0.5) * 10, rx: 40 + r() * 12, ry: 6 + r() * 2 };
+
+    // 溢れ量が閾値を超えたら、最も長いしずくが床まで垂れて水たまりになる
+    if (strength >= 0.8) {
+        const longest = drips.reduce((a, b) => (a.L > b.L ? a : b));
+        longest.L = 999;
+        spill.puddle = { cx: 50 + (r() - 0.5) * 6 * j, rx: 44, ry: 7 };
     }
+
     for (const d of drips) d.L = Math.min(d.L, BODY_BOTTOM - base - d.w * 0.55);
     return spill;
 }
+
 function spillPath(c, { base, drips }) {
     c.moveTo(2, base);
     c.quadraticCurveTo(0, 26, 8, 20);
@@ -124,7 +142,7 @@ function drawJar(c, key, level, rgb) {
     const r = rng(hashStr(key));
     const phase = r() * Math.PI * 2, side = r() < 0.5 ? -1 : 1, tilt = side * (0.08 + r() * 0.08);
     const bubbles = Array.from({ length: 6 }, () => [20 + r() * 60, r(), 1.6 + r() * 2.4]);
-    const spill = makeSpill(r);
+    const spill = makeSpill(r, 0.8);
     const over = level === LOVE, fill = css(rgb);
 
     c.save(); c.lineJoin = "round"; c.lineCap = "round";
