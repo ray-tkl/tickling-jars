@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>くすぐり性癖の瓶</title>
+    <meta name="description" content="好きな色を選んで、興味関心ごとに瓶を満たして、1枚の画像にまとめます。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <header class="top">
+            <p>くすぐり性癖の瓶</p>
+        </header>
+
+        <section class="panel">
+            <h2><label for="name">名前</label></h2>
+            <input type="text" id="name" maxlength="20" autocomplete="off" placeholder="名前を入力">
+        </section>
+
+        <section class="panel">
+            <h2>液体の色</h2>
+            <div class="picker">
+                <div class="picker-main">
+                    <label class="field-label">色相
+                        <input type="range" id="hue" min="0" max="360" step="1">
+                    </label>
+                    <div class="tones" id="tones" role="group" aria-label="明るさ"></div>
+                </div>
+                <div class="preview-jars" aria-hidden="true">
+                    <canvas id="pv1"></canvas><canvas id="pv2"></canvas><canvas id="pv3"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2 id="roleLabel">ぐりぐら</h2>
+            <div class="roles" id="roles" role="group" aria-labelledby="roleLabel"></div>
+        </section>
+
+        <section class="panel">
+            <h2>興味関心</h2>
+            <div class="items" id="items"></div>
+        </section>
+
+        <section class="actions">
+            <button class="big" id="generate" type="button">画像を生成</button>
+        </section>
+
+        <section class="panel result" id="result" hidden>
+            <img id="resultImg" alt="生成されたくすぐり性癖の瓶の画像">
+            <a class="big" id="download" href="#" download>画像を保存</a>
+        </section>
+    </div>
+
+    <footer class="site-footer">
+        <p>制作：
+            <a href="https://x.com/ray_tkl" target="_blank" rel="noopener">れー(@ray_tkl)</a>
+        </p>
+        <p>参考：
+            <a href="https://adampointyboots.github.io/kink-jars-tickling/" target="_blank" rel="noopener">Tickling Kink Jars</a> /
+            <a href="https://seiheki-bin.com/" target="_blank" rel="noopener">性癖の瓶工場</a><br>
+        </p>
+    </footer>
+    <noscript>
+        <p class="noscript">このページを使うにはJavaScriptを有効にしてください。</p>
+    </noscript>
+    <script src="jars.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
