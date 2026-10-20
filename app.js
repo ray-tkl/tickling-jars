@@ -377,6 +377,9 @@ async function generate() {
         $("resultImg").src = resultUrl;
         $("download").href = resultUrl;
         $("download").download = (safe ? safe + "_" : "") + "tickling_jars.png";
+        const creatorCard = $("creatorCard");
+        const slot = $("creatorSlotAfterResult");
+        if (creatorCard && slot) slot.appendChild(creatorCard);
         $("result").hidden = false;
         $("result").scrollIntoView({ behavior: "smooth", block: "start" });
     } finally {
