@@ -19,7 +19,7 @@ const TONES = [
 const DEFAULT_TONE = 1;
 
 /* ===== どのときの自分として ===== */
-const ROLES = ["ぐり", "ぐら", "両刀"];
+const ROLES = ["ぐり", "ぐら"];
 const DEFAULT_ROLE = 0;
 
 const SETTINGS = Object.assign({ title: "({role}) #くすぐり性癖の瓶", columns: 8 }, typeof JAR_SETTINGS === "object" ? JAR_SETTINGS : {});
@@ -83,7 +83,7 @@ function bodyPath(c) {
 function drawLid(c, rgb, dx, dy, rot) {
     c.save(); c.translate(50 + dx, 13 + dy); c.rotate(rot); c.translate(-50, -13);
     c.beginPath(); roundRectPath(c, 10, 2, 80, 22, 6);
-    c.fillStyle = lighten(rgb, 0.82); c.fill(); c.lineWidth = 4.5; c.strokeStyle = INK; c.stroke();
+    c.fillStyle = "#fff"; c.fill(); c.lineWidth = 4.5; c.strokeStyle = INK; c.stroke();
     c.lineWidth = 2.2; c.beginPath();
     for (const y of [9, 16]) { c.moveTo(15, y); c.lineTo(85, y); }
     c.stroke(); c.restore();
