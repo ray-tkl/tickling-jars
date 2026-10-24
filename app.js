@@ -2,13 +2,14 @@
 
 /* ===== 段階の定義（左から順） ===== */
 const LEVELS = [
-    { label: "興味なし", fill: 0 },
-    { label: "少し興味あり", fill: 0.2 },
-    { label: "興味あり", fill: 0.5 },
-    { label: "好き", fill: 0.9 },
-    { label: "大好き", fill: 1 }, // やや溢れる
+    { fill: 0 },
+    { fill: 0.2 },
+    { fill: 0.5 },
+    { fill: 0.7 },
+    { fill: 0.95 },
+    { fill: 1 }, // 溢れる
 ];
-const LOVE = 4, DEFAULT_LEVEL = 0;
+const LOVE = LEVELS.length - 1, DEFAULT_LEVEL = 0;
 
 /* ===== 明るさの3段階（白・黒に寄りすぎて見えなくならない範囲に固定） ===== */
 const TONES = [
@@ -295,10 +296,10 @@ const items = JARS.map(label => {
     return item;
 });
 function renderItem(item, rgb = colorRgb()) {
-    const lv = levelOf(item.label), text = LEVELS[lv].label;
+    const lv = levelOf(item.label);
     item.slider.value = lv;
     item.slider.style.setProperty("--pct", (lv / (LEVELS.length - 1)) * 100 + "%");
-    item.slider.setAttribute("aria-valuetext", text);
+    item.slider.setAttribute("aria-valuetext", `${lv}`);
     drawMini(item.canvas, item.label, lv, rgb);
 }
 
@@ -350,7 +351,7 @@ function renderColor() {
     requestAnimationFrame(() => {
         colorQueued = false;
         const c = colorRgb();
-        drawMini($("pv1"), "preview-1", 1, c); drawMini($("pv2"), "preview-2", 3, c); drawMini($("pv3"), "preview-3", 4, c);
+        drawMini($("pv1"), "preview-1", 1, c); drawMini($("pv2"), "preview-2", 3, c); drawMini($("pv3"), "preview-3", 5, c);
         items.forEach(it => renderItem(it, c));
     });
 }
